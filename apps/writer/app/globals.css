@@ -1,0 +1,111 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@layer base {
+  :root {
+    --color-background: #fafafa; /* zinc-50 */
+    --color-foreground: #18181b; /* zinc-900 */
+  }
+
+  .dark {
+    --color-background: #27272a; /* zinc-800 */
+    --color-foreground: #fafafa; /* zinc-50 */
+  }
+
+  html {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    min-height: 100vh;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
+  }
+
+  /* Smooth selection highlight */
+  ::selection {
+    background-color: #3f3f46;
+    color: #fafafa;
+  }
+
+  .dark ::selection {
+    background-color: #a1a1aa;
+    color: #18181b;
+  }
+
+  /* Cursor pointer for clickable elements */
+  button,
+  a,
+  [role="button"],
+  input[type="submit"],
+  input[type="button"],
+  label[for],
+  select {
+    cursor: pointer;
+  }
+}
+
+/* Custom scrollbar */
+.editor-textarea {
+  overflow-y: auto;
+  caret-color: #71717a;
+  padding-right: 12px;
+}
+
+/* Typewriter mode - add bottom padding so content can scroll to center */
+.editor-textarea.typewriter-mode {
+  padding-bottom: 40%;
+}
+
+.dark .editor-textarea {
+  caret-color: #a1a1aa;
+}
+
+.editor-textarea::-webkit-scrollbar {
+  width: 8px;
+}
+
+.editor-textarea::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.editor-textarea::-webkit-scrollbar-thumb {
+  background: #d4d4d8; /* zinc-300 */
+  border-radius: 4px;
+}
+
+.dark .editor-textarea::-webkit-scrollbar-thumb {
+  background: #3f3f46; /* zinc-700 */
+}
+
+/* Preview scrollbar - same styles */
+.prose-preview {
+  padding-right: 12px;
+}
+
+.prose-preview::-webkit-scrollbar {
+  width: 8px;
+}
+
+.prose-preview::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.prose-preview::-webkit-scrollbar-thumb {
+  background: #d4d4d8; /* zinc-300 */
+  border-radius: 4px;
+}
+
+.dark .prose-preview::-webkit-scrollbar-thumb {
+  background: #3f3f46; /* zinc-700 */
+}

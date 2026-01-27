@@ -1,0 +1,215 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  /* Custom animation */
+  --animate-fade-in: fade-in 0.5s ease-out forwards;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@layer base {
+  :root {
+    --color-background: #fafafa; /* zinc-50 */
+    --color-foreground: #18181b; /* zinc-900 */
+  }
+
+  .dark {
+    --color-background: #27272a; /* zinc-800 */
+    --color-foreground: #fafafa; /* zinc-50 */
+  }
+
+  html {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    min-height: 100vh;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
+  }
+
+  /* Smooth selection highlight */
+  ::selection {
+    background-color: #3f3f46;
+    color: #fafafa;
+  }
+
+  .dark ::selection {
+    background-color: #a1a1aa;
+    color: #18181b;
+  }
+
+  /* Cursor pointer for clickable elements */
+  button,
+  a,
+  [role="button"],
+  input[type="submit"],
+  input[type="button"],
+  label[for],
+  select {
+    cursor: pointer;
+  }
+}
+
+/* Prose styles for MDX content */
+@layer components {
+  .prose {
+    line-height: 1.8;
+    letter-spacing: -0.01em;
+  }
+
+  .prose p {
+    margin-bottom: 1.5em;
+  }
+
+  .prose h2 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-top: 2.5em;
+    margin-bottom: 0.75em;
+    letter-spacing: -0.02em;
+  }
+
+  .prose h3 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin-top: 2em;
+    margin-bottom: 0.5em;
+    letter-spacing: -0.02em;
+  }
+
+  .prose ul {
+    list-style-type: disc;
+    padding-left: 1.5em;
+    margin-bottom: 1.5em;
+  }
+
+  .prose li {
+    margin-bottom: 0.5em;
+  }
+
+  .prose a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+    transition: text-decoration-color 0.2s ease;
+  }
+
+  .prose a:hover {
+    text-decoration-color: #a1a1aa;
+  }
+
+  .prose code {
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+    background-color: #e4e4e7; /* zinc-200 */
+    padding: 0.15em 0.4em;
+    border-radius: 0.25rem;
+  }
+
+  .dark .prose code {
+    background-color: #3f3f46; /* zinc-700 */
+  }
+
+  .prose pre {
+    position: relative;
+    background-color: #18181b; /* zinc-900 */
+    color: #fafafa;
+    padding: 1.25rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    margin-bottom: 1.5em;
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 1rem,
+      black calc(100% - 1rem),
+      transparent
+    );
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 1rem,
+      black calc(100% - 1rem),
+      transparent
+    );
+  }
+
+  .prose pre code {
+    background-color: transparent;
+    padding: 0;
+  }
+
+  /* Blockquote styling */
+  .prose blockquote {
+    border-left: 2px solid #a1a1aa;
+    padding-left: 1.25em;
+    margin: 1.5em 0;
+    font-style: italic;
+    color: #71717a;
+  }
+
+  .dark .prose blockquote {
+    border-left-color: #52525b;
+    color: #a1a1aa;
+  }
+}
+
+/* Reader mode scrollbar */
+.reader-content {
+  padding-right: 12px;
+}
+
+.reader-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.reader-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.reader-content::-webkit-scrollbar-thumb {
+  background: #d4d4d8; /* zinc-300 */
+  border-radius: 4px;
+}
+
+.dark .reader-content::-webkit-scrollbar-thumb {
+  background: #3f3f46; /* zinc-700 */
+}
+
+/* Posts list scrollbar */
+.posts-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.posts-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.posts-list::-webkit-scrollbar-thumb {
+  background: #d4d4d8; /* zinc-300 */
+  border-radius: 4px;
+}
+
+.dark .posts-list::-webkit-scrollbar-thumb {
+  background: #3f3f46; /* zinc-700 */
+}
