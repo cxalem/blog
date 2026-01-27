@@ -19,6 +19,7 @@ export default async function EditPostPage({ params }: EditPostPageProps) {
       initialTitle={post.title}
       initialContent={post.content}
       initialDraft={post.draft}
+      initialLang={post.lang}
       slug={slug}
     />
   );

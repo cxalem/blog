@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { savePost, deletePost } from "@/lib/actions";
+import { savePost, deletePost, type PostLang } from "@/lib/actions";
 
 // Lazy load syntax highlighter (heavy dependency ~200KB)
 const SyntaxHighlighter = dynamic(
@@ -36,6 +36,7 @@ interface EditorProps {
   initialTitle?: string;
   initialContent?: string;
   initialDraft?: boolean;
+  initialLang?: PostLang;
   slug?: string;
 }
 
@@ -65,11 +66,13 @@ export function Editor({
   initialTitle = "",
   initialContent = "",
   initialDraft = true,
+  initialLang = "en",
   slug,
 }: EditorProps) {
   const [title, setTitle] = useState(initialTitle);
   const [content, setContent] = useState(initialContent);
   const [isDraft, setIsDraft] = useState(initialDraft);
+  const [lang, setLang] = useState<PostLang>(initialLang);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isPreview, setIsPreview] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -101,6 +104,7 @@ export function Editor({
         title,
         content,
         draft: draftStatus,
+        lang,
         existingSlug: slug,
       });
       setSaving(false);
@@ -111,7 +115,7 @@ export function Editor({
         setTimeout(() => setSaved(false), 2000);
       }
     },
-    [title, content, isDraft, slug],
+    [title, content, isDraft, lang, slug],
   );
 
   const handleDelete = useCallback(async () => {
@@ -375,6 +379,30 @@ export function Editor({
                 }`}
               >
                 Published
+              </button>
+            </div>
+
+            {/* Language toggle */}
+            <div className="flex items-center rounded-md bg-zinc-100 dark:bg-zinc-700 p-0.5 mr-2">
+              <button
+                onClick={() => setLang("en")}
+                className={`px-2 py-1 text-xs font-medium rounded transition-colors duration-200 ${
+                  lang === "en"
+                    ? "bg-white dark:bg-zinc-600 text-zinc-900 dark:text-zinc-100 shadow-sm"
+                    : "text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-300"
+                }`}
+              >
+                en
+              </button>
+              <button
+                onClick={() => setLang("es")}
+                className={`px-2 py-1 text-xs font-medium rounded transition-colors duration-200 ${
+                  lang === "es"
+                    ? "bg-white dark:bg-zinc-600 text-zinc-900 dark:text-zinc-100 shadow-sm"
+                    : "text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-300"
+                }`}
+              >
+                es
               </button>
             </div>
 

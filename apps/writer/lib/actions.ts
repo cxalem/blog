@@ -5,15 +5,18 @@ import path from "path";
 
 const postsDirectory = path.join(process.cwd(), "../../packages/content/posts");
 
+export type PostLang = "en" | "es";
+
 export interface SavePostOptions {
   title: string;
   content: string;
   draft?: boolean;
+  lang?: PostLang;
   existingSlug?: string; // For preserving slug when editing
 }
 
 export async function savePost(options: SavePostOptions) {
-  const { title, content, draft = true, existingSlug } = options;
+  const { title, content, draft = true, lang = "en", existingSlug } = options;
 
   // Use existing slug if editing, otherwise create from title
   const slug =
@@ -36,11 +39,12 @@ export async function savePost(options: SavePostOptions) {
     }
   }
 
-  // Create frontmatter with draft status
+  // Create frontmatter with draft status and language
   const fileContent = `---
 title: "${title}"
 date: "${date}"
 draft: ${draft}
+lang: "${lang}"
 ---
 
 ${content}`;
@@ -77,12 +81,14 @@ export async function getAllPosts() {
       const titleMatch = fileContents.match(/title:\s*"([^"]+)"/);
       const dateMatch = fileContents.match(/date:\s*"([^"]+)"/);
       const draftMatch = fileContents.match(/draft:\s*(true|false)/);
+      const langMatch = fileContents.match(/lang:\s*"(en|es)"/);
 
       return {
         slug,
         title: titleMatch ? titleMatch[1] : slug,
         date: dateMatch ? dateMatch[1] : "",
         draft: draftMatch ? draftMatch[1] === "true" : false,
+        lang: (langMatch ? langMatch[1] : "en") as PostLang,
       };
     })
     .sort((a, b) => ((a.date || "") > (b.date || "") ? -1 : 1));
@@ -101,6 +107,7 @@ export async function getPost(slug: string) {
   const titleMatch = fileContents.match(/title:\s*"([^"]+)"/);
   const dateMatch = fileContents.match(/date:\s*"([^"]+)"/);
   const draftMatch = fileContents.match(/draft:\s*(true|false)/);
+  const langMatch = fileContents.match(/lang:\s*"(en|es)"/);
 
   // Get content after frontmatter
   const contentMatch = fileContents.match(/---[\s\S]*?---\s*([\s\S]*)/);
@@ -111,6 +118,7 @@ export async function getPost(slug: string) {
     title: titleMatch ? titleMatch[1] : slug,
     date: dateMatch ? dateMatch[1] : "",
     draft: draftMatch ? draftMatch[1] === "true" : false,
+    lang: (langMatch ? langMatch[1] : "en") as PostLang,
     content,
   };
 }
