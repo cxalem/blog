@@ -74,10 +74,12 @@ export function ReaderMode({ children, title, date }: ReaderModeProps) {
 
               {/* Content area */}
               <div className="relative h-[30vh]">
-                {/* Top fade - only show when scrolled */}
-                {scrollTop > 20 && (
-                  <div className="pointer-events-none absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-[var(--color-background)] to-transparent z-10" />
-                )}
+                {/* Top fade - animated appearance */}
+                <div
+                  className={`pointer-events-none absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-[var(--color-background)] to-transparent z-10 transition-opacity duration-500 ${
+                    scrollTop > 5 ? "opacity-100" : "opacity-0"
+                  }`}
+                />
                 {/* Bottom fade */}
                 <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[var(--color-background)] to-transparent z-10" />
 
