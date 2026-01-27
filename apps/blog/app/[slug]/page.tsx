@@ -41,18 +41,24 @@ export async function generateMetadata({ params }: PostPageProps) {
 
   const cleanTitle = stripMarkdown(post.title);
 
+  const description = post.content.slice(0, 160).replace(/\n/g, " ").trim();
+
   return {
     title: `${cleanTitle} | @cxalem thoughts`,
-    description: post.content.slice(0, 160).replace(/\n/g, " ").trim(),
+    description,
     openGraph: {
       title: cleanTitle,
+      description,
       type: "article",
       publishedTime: post.date,
       authors: ["@cxalem"],
+      siteName: "@cxalem thoughts",
     },
     twitter: {
       card: "summary_large_image",
       title: cleanTitle,
+      description,
+      creator: "@cxalem",
     },
   };
 }
