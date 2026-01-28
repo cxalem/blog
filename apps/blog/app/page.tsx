@@ -19,7 +19,7 @@ export default function Home() {
         <PostsList posts={posts} />
 
         {/* me section */}
-        <section className="mt-20 mb-16">
+        <section className="mt-20 mb-16 animate-fade-in opacity-0" style={{ animationDelay: "100ms" }}>
           <h2 className="text-sm font-medium text-zinc-400 dark:text-zinc-500 mb-4 lowercase">
             me
           </h2>
@@ -42,7 +42,7 @@ export default function Home() {
         </section>
 
         {/* current section */}
-        <section className="mb-20">
+        <section className="mb-20 animate-fade-in opacity-0" style={{ animationDelay: "200ms" }}>
           <h2 className="text-sm font-medium text-zinc-400 dark:text-zinc-500 mb-4 lowercase">
             current
           </h2>
