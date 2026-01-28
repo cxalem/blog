@@ -16,12 +16,14 @@ export default function Home() {
           <ThemeToggle />
         </header>
 
+        <PostsList posts={posts} />
+
         {/* me section */}
-        <section className="mb-16">
+        <section className="mt-20 mb-16">
           <h2 className="text-sm font-medium text-zinc-400 dark:text-zinc-500 mb-4 lowercase">
             me
           </h2>
-          <ul className="space-y-2 text-zinc-700 dark:text-zinc-300">
+          <ul className="list-disc list-outside ml-5 space-y-2 text-zinc-700 dark:text-zinc-300">
             <li>design engineer with 5+ years of experience building mobile and web apps</li>
             <li>deep focus in ux</li>
             <li>
@@ -44,7 +46,7 @@ export default function Home() {
           <h2 className="text-sm font-medium text-zinc-400 dark:text-zinc-500 mb-4 lowercase">
             current
           </h2>
-          <ul className="space-y-2 text-zinc-700 dark:text-zinc-300">
+          <ul className="list-disc list-outside ml-5 space-y-2 text-zinc-700 dark:text-zinc-300">
             <li>building templates and maintainer of the solana foundation templates repo</li>
             <li>
               member of{" "}
@@ -93,8 +95,6 @@ export default function Home() {
             </li>
           </ul>
         </section>
-
-        <PostsList posts={posts} />
       </main>
     </div>
   );
