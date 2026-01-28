@@ -35,7 +35,7 @@ interface LinkMeta {
   image?: string;
 }
 
-// Known links metadata
+// Known links metadata - more specific patterns first
 const LINK_METADATA: Record<string, LinkMeta> = {
   "github.com/solana-foundation/templates": {
     title: "Solana Templates",
@@ -47,14 +47,14 @@ const LINK_METADATA: Record<string, LinkMeta> = {
     description: "Solana community collective",
     image: "/la-familia.png",
   },
+  "dashboard.itx-indexer.com": {
+    title: "ITX Dashboard",
+    description: "Showcase of TX Indexer SDK capabilities",
+    image: "/itx.svg",
+  },
   "itx-indexer.com": {
     title: "TX Indexer SDK",
     description: "SDK for classified Solana transactions",
-    image: "/itx.svg",
-  },
-  "dashboard.itx-indexer.com/home": {
-    title: "ITX Dashboard",
-    description: "Showcase of TX Indexer SDK capabilities",
     image: "/itx.svg",
   },
   "x.com/kronos_guild": {
