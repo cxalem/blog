@@ -31,7 +31,7 @@ export function PostsList({ posts }: PostsListProps) {
   }
 
   return (
-    <div className="relative max-h-[60vh]">
+    <div className="relative max-h-[75vh]">
       {/* Top fade - only show when scrolled */}
       {scrollTop > 10 && (
         <div className="pointer-events-none absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-[var(--color-background)] to-transparent z-10" />
@@ -43,7 +43,7 @@ export function PostsList({ posts }: PostsListProps) {
 
       <div
         onScroll={handleScroll}
-        className="max-h-[60vh] overflow-y-auto posts-list pr-3"
+        className="max-h-[75vh] overflow-y-auto posts-list pr-3"
       >
         <ul className="space-y-8">
           {posts.map((post, index) => (
