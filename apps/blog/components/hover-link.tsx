@@ -20,6 +20,7 @@ import {
   FloatingPortal,
 } from "@floating-ui/react";
 import { ExternalLink } from "lucide-react";
+import Image from "next/image";
 
 interface HoverLinkProps {
   href: string;
@@ -31,6 +32,7 @@ interface LinkMeta {
   title: string;
   description: string;
   icon?: "github" | "solana" | "x" | "external";
+  image?: string;
 }
 
 // Known links metadata
@@ -43,17 +45,17 @@ const LINK_METADATA: Record<string, LinkMeta> = {
   "x.com/LaFamilia_so": {
     title: "La Familia",
     description: "Solana community collective",
-    icon: "x",
+    image: "/la-familia.png",
   },
   "itx-indexer.com": {
     title: "TX Indexer SDK",
     description: "SDK for classified Solana transactions",
-    icon: "solana",
+    image: "/itx.svg",
   },
   "dashboard.itx-indexer.com": {
     title: "ITX Dashboard",
     description: "Showcase of TX Indexer SDK capabilities",
-    icon: "solana",
+    image: "/itx.svg",
   },
   "x.com/kronos_guild": {
     title: "Kronos Guild",
@@ -62,7 +64,7 @@ const LINK_METADATA: Record<string, LinkMeta> = {
   },
   "x.com/SolanaStudentAf": {
     title: "SSA",
-    description: "Solana Student Alliance",
+    description: "Solana Student Africa",
     icon: "x",
   },
 };
@@ -318,7 +320,18 @@ export function HoverLink({ href, children, className }: HoverLinkProps) {
               }}
             >
               <div className="flex-shrink-0 opacity-80">
-                <LinkIcon type={meta.icon} />
+                {meta.image ? (
+                  <Image
+                    src={meta.image}
+                    alt={meta.title}
+                    width={10}
+                    height={10}
+                    unoptimized={true}
+                    className="h-10 w-10 object-contain rounded-lg"
+                  />
+                ) : (
+                  <LinkIcon type={meta.icon} />
+                )}
               </div>
               <div className="flex-1 min-w-0">
                 <div className="font-medium text-sm truncate">{meta.title}</div>
