@@ -20,7 +20,7 @@ export default function Home() {
 
         {/* me section */}
         <section className="mt-20 mb-16 animate-fade-in opacity-0" style={{ animationDelay: "100ms" }}>
-          <h2 className="text-sm font-medium text-zinc-400 dark:text-zinc-500 mb-4 lowercase">
+          <h2 className="text-base font-medium text-zinc-400 dark:text-zinc-500 mb-4 lowercase">
             me
           </h2>
           <ul className="list-disc list-outside ml-5 space-y-2 text-zinc-700 dark:text-zinc-300">
@@ -43,7 +43,7 @@ export default function Home() {
 
         {/* current section */}
         <section className="mb-20 animate-fade-in opacity-0" style={{ animationDelay: "200ms" }}>
-          <h2 className="text-sm font-medium text-zinc-400 dark:text-zinc-500 mb-4 lowercase">
+          <h2 className="text-base font-medium text-zinc-400 dark:text-zinc-500 mb-4 lowercase">
             current
           </h2>
           <ul className="list-disc list-outside ml-5 space-y-2 text-zinc-700 dark:text-zinc-300">
