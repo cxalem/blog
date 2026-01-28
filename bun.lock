@@ -4,6 +4,9 @@
   "workspaces": {
     "": {
       "name": "blog",
+      "dependencies": {
+        "react": "^19.2.4",
+      },
       "devDependencies": {
         "prettier": "^3.7.4",
         "turbo": "^2.7.6",
