@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
+import Lenis from "lenis";
 import { BookOpen, Minimize2 } from "lucide-react";
 
 interface ReaderModeProps {
@@ -14,6 +15,7 @@ export function ReaderMode({ children, title, date }: ReaderModeProps) {
   const [scrollTop, setScrollTop] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const lenisRef = useRef<Lenis | null>(null);
 
   const toggleFullscreen = useCallback(async () => {
     if (!document.fullscreenElement) {
@@ -34,7 +36,50 @@ export function ReaderMode({ children, title, date }: ReaderModeProps) {
       document.removeEventListener("fullscreenchange", handleFullscreenChange);
   }, []);
 
+  // Initialize Lenis for smooth scrolling in fullscreen
+  useEffect(() => {
+    if (!isFullscreen || !contentRef.current) {
+      // Cleanup when exiting fullscreen
+      if (lenisRef.current) {
+        lenisRef.current.destroy();
+        lenisRef.current = null;
+      }
+      return;
+    }
+
+    const lenis = new Lenis({
+      wrapper: contentRef.current,
+      content: contentRef.current.firstElementChild as HTMLElement,
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    });
+
+    lenisRef.current = lenis;
+
+    // Update scroll state from Lenis
+    lenis.on("scroll", ({ scroll }: { scroll: number }) => {
+      setScrollTop(scroll);
+    });
+
+    // Animation frame loop
+    let rafId: number;
+    function raf(time: number) {
+      lenis.raf(time);
+      rafId = requestAnimationFrame(raf);
+    }
+    rafId = requestAnimationFrame(raf);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      lenis.destroy();
+      lenisRef.current = null;
+    };
+  }, [isFullscreen]);
+
+  // Fallback scroll handler
   const handleScroll = useCallback((e: React.UIEvent<HTMLDivElement>) => {
+    if (lenisRef.current) return;
     setScrollTop(e.currentTarget.scrollTop);
   }, []);
 

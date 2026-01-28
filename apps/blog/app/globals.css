@@ -213,3 +213,49 @@
 .dark .posts-list::-webkit-scrollbar-thumb {
   background: #3f3f46; /* zinc-700 */
 }
+
+/* Link preview card */
+.link-preview-card {
+  opacity: 0;
+  animation: link-preview-in 0.2s ease-out forwards;
+}
+
+@keyframes link-preview-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Link preview trigger - inherit prose link styles */
+.link-preview-trigger {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: text-decoration-color 0.2s ease;
+}
+
+.link-preview-trigger:hover {
+  text-decoration-color: #a1a1aa;
+}
+
+/* Hover card for homepage links */
+.hover-card {
+  opacity: 0;
+  animation: hover-card-in 0.15s ease-out forwards;
+}
+
+@keyframes hover-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

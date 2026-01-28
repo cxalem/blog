@@ -6,6 +6,7 @@ import { getAllPosts, getPostBySlug } from "@/lib/posts";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { FormattedTitle } from "@/components/formatted-title";
 import { ReaderMode } from "@/components/reader-mode";
+import { mdxComponents } from "@/components/mdx-components";
 import { ArrowLeft } from "lucide-react";
 
 interface PostPageProps {
@@ -89,7 +90,7 @@ export default async function PostPage({ params }: PostPageProps) {
           title={<FormattedTitle title={post.title} />}
           date={post.date}
         >
-          <MDXRemote source={post.content} />
+          <MDXRemote source={post.content} components={mdxComponents} />
         </ReaderMode>
       </main>
     </div>

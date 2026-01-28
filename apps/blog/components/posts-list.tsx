@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import Link from "next/link";
+import Lenis from "lenis";
 import { FormattedTitle } from "./formatted-title";
 
 interface Post {
@@ -17,8 +18,48 @@ interface PostsListProps {
 export function PostsList({ posts }: PostsListProps) {
   const [scrollTop, setScrollTop] = useState(0);
   const [isAtBottom, setIsAtBottom] = useState(false);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const lenisRef = useRef<Lenis | null>(null);
 
+  // Initialize Lenis for smooth scrolling
+  useEffect(() => {
+    if (posts.length <= 5 || !wrapperRef.current) return;
+
+    const lenis = new Lenis({
+      wrapper: wrapperRef.current,
+      content: wrapperRef.current.firstElementChild as HTMLElement,
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    });
+
+    lenisRef.current = lenis;
+
+    // Update scroll state from Lenis
+    lenis.on(
+      "scroll",
+      ({ scroll, limit }: { scroll: number; limit: number }) => {
+        setScrollTop(scroll);
+        setIsAtBottom(limit - scroll < 10);
+      },
+    );
+
+    // Animation frame loop
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    return () => {
+      lenis.destroy();
+      lenisRef.current = null;
+    };
+  }, [posts.length]);
+
+  // Fallback scroll handler for when Lenis isn't active
   const handleScroll = useCallback((e: React.UIEvent<HTMLDivElement>) => {
+    if (lenisRef.current) return; // Lenis handles this
     const target = e.currentTarget;
     setScrollTop(target.scrollTop);
     setIsAtBottom(
@@ -32,18 +73,27 @@ export function PostsList({ posts }: PostsListProps) {
 
   return (
     <div className={`relative ${posts.length > 5 ? "max-h-[85vh]" : ""}`}>
-      {/* Top fade - only show when scrolled */}
-      {scrollTop > 10 && (
-        <div className="pointer-events-none absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-[var(--color-background)] to-transparent z-10" />
+      {/* Top fade - animated appearance */}
+      {posts.length > 5 && (
+        <div
+          className={`pointer-events-none absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-[var(--color-background)] to-transparent z-10 transition-opacity duration-500 ${
+            scrollTop > 5 ? "opacity-100" : "opacity-0"
+          }`}
+        />
       )}
-      {/* Bottom fade - hide when at bottom */}
-      {!isAtBottom && posts.length > 5 && (
-        <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[var(--color-background)] to-transparent z-10" />
+      {/* Bottom fade - animated disappearance */}
+      {posts.length > 5 && (
+        <div
+          className={`pointer-events-none absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[var(--color-background)] to-transparent z-10 transition-opacity duration-500 ${
+            isAtBottom ? "opacity-0" : "opacity-100"
+          }`}
+        />
       )}
 
       <div
+        ref={wrapperRef}
         onScroll={handleScroll}
-        className={`posts-list pr-3 ${posts.length > 5 ? "max-h-[85vh] overflow-y-auto" : ""}`}
+        className={`posts-list pr-3 ${posts.length > 5 ? "max-h-[400px] overflow-y-auto" : ""}`}
       >
         <ul className="space-y-8">
           {posts.map((post, index) => (
