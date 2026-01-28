@@ -59,7 +59,18 @@ export default function Home() {
                 la familia
               </Link>
             </li>
-            <li>building tx-indexer sdk to get classified transactions</li>
+            <li>
+              building{" "}
+              <Link
+                href="https://itx-indexer.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline underline-offset-3 decoration-1 hover:text-zinc-500 transition-colors duration-200"
+              >
+                tx-indexer sdk
+              </Link>{" "}
+              to get classified transactions
+            </li>
             <li>
               building{" "}
               <Link
