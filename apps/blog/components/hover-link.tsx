@@ -52,7 +52,7 @@ const LINK_METADATA: Record<string, LinkMeta> = {
     description: "SDK for classified Solana transactions",
     image: "/itx.svg",
   },
-  "dashboard.itx-indexer.com": {
+  "dashboard.itx-indexer.com/home": {
     title: "ITX Dashboard",
     description: "Showcase of TX Indexer SDK capabilities",
     image: "/itx.svg",
