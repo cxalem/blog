@@ -28,13 +28,13 @@ export default function Home() {
           </h2>
           <ul className="list-disc list-outside ml-5 space-y-2 text-zinc-700 dark:text-zinc-300">
             <li>
-              design engineer with 5+ years of experience building mobile and
-              web apps
+              design engineer and solana developer, focused on building
+              polished, high-performance interfaces and developer tools
             </li>
-            <li>deep focus in ux</li>
+            <li>deep focus in ux and visual craft</li>
             <li>
-              have interests in blockchain, specifically in solana, i've been
-              collaborating to repos like{" "}
+              core contributor to solana foundation open-source projects,
+              second-highest contributor to{" "}
               <HoverLink
                 href="https://github.com/solana-foundation/templates"
                 className="underline underline-offset-3 decoration-1 hover:text-zinc-500 transition-colors duration-200"
@@ -43,8 +43,11 @@ export default function Home() {
               </HoverLink>
             </li>
             <li>
-              i've been building with next.js, react native, node, rust, and
-              typescript
+              published sdk author, former devrel engineer at consensys
+            </li>
+            <li>
+              building with next.js, react native, rust, typescript, anchor,
+              and @solana/kit
             </li>
           </ul>
         </section>
@@ -59,8 +62,15 @@ export default function Home() {
           </h2>
           <ul className="list-disc list-outside ml-5 space-y-2 text-zinc-700 dark:text-zinc-300">
             <li>
-              building templates and maintainer of the solana foundation
-              templates repo
+              software engineer (contract) at the solana foundation — building
+              templates and maintaining the official{" "}
+              <HoverLink
+                href="https://github.com/solana-foundation/templates"
+                className="underline underline-offset-3 decoration-1 hover:text-zinc-500 transition-colors duration-200"
+              >
+                templates
+              </HoverLink>{" "}
+              repo powering create-solana-dapp
             </li>
             <li>
               member of{" "}
@@ -79,7 +89,8 @@ export default function Home() {
               >
                 tx-indexer sdk
               </HoverLink>{" "}
-              to get classified transactions
+              — classified solana transactions with protocol detection and spam
+              filtering, being integrated into the foundation's framework-kit
             </li>
             <li>
               building{" "}
