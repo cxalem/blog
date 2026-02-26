@@ -1,0 +1,63 @@
+---
+title: "Solana JS DX and my first week with Kit plugins"
+date: "2026-02-27"
+draft: true
+lang: "en"
+---
+
+I want to talk about the DX experience in JavaScript for the Solana ecosystem.
+
+We all know this is still hard. Maybe not impossible, but definitely not easy to follow if you are building real apps and not just toy examples.
+
+For years we have tried to make this easier with libraries, hooks, wrappers, and helpers. There are great efforts. For example, `Codama` gives us really good generated clients. But there is still a gap between generated clients and a clean app integration flow.
+
+Today I was working with [Kit plugins](https://github.com/anza-xyz/kit-plugins), and I want to share what surprised me.
+
+At the beginning, I was a bit skeptical. It reminded me of the `MetaMask Snaps` era.
+
+I still think Snaps was strong tech with real potential, and I have friends there who did amazing work. But in practice, the DX never got smooth enough to become mainstream, so that memory made me cautious here too.
+
+I kept thinking: do people really want to assemble small pieces and build their own client from scratch? That can be great for learning, but does it work for teams trying to ship a real company product?
+
+And even if you already have a product in production, why would you migrate from one stack to another?
+
+For me, the answer here is pretty simple. If the plugin approach is better, you save code, remove custom glue, and replace hand-rolled transaction flows with a clearer standard path. That is not just taste. That is not just one team saying this style is better than another style. This feels more objective because it reduces complexity in places where most teams were solving the same problem in slightly different ways.
+
+After trying the plugins, I started to like the model more than I expected.
+
+You begin with an empty constructor and compose only what you need. That means you can keep the client small and explicit. If your app needs RPC, wallet payer, and transaction sending, you plug those in. If you also need airdrop in dev mode, add it. If not, skip it.
+
+```ts
+import { createEmptyClient } from "@solana/kit";
+import {
+  rpc,
+  payer,
+  defaultTransactionPlannerAndExecutorFromRpc,
+  planAndSendTransactions,
+} from "@solana/kit-plugins";
+
+const txClient = createEmptyClient()
+  .use(rpc("https://api.devnet.solana.com"))
+  .use(payer(signer))
+  .use(defaultTransactionPlannerAndExecutorFromRpc())
+  .use(planAndSendTransactions());
+```
+
+From an app perspective, this feels clean.
+
+```ts
+const result = await txClient.sendTransaction([...instructions]);
+const signature = result.context.signature;
+```
+
+That part is clever. Simple surface area and strong building blocks.
+
+Still, I hit real issues while implementing this in a browser wallet flow. The main pain point was error quality. Many times I got a very generic execution error from transaction planning, and it was hard to quickly understand the real root cause in UI logs.
+
+So yes, I like the architecture, but I also think we still need better default ergonomics around browser wallet edge cases and error clarity.
+
+Also, this is very early. This was just released a couple of days ago. I hit some walls, sure, but I am honestly excited. I trust the people building this, and I am pretty sure these issues will get fixed quickly.
+
+I started this process skeptical and ended up optimistic. I really think this direction can help us get to a much better JavaScript experience on Solana if we keep improving the rough edges.
+
+The idea is strong, the composition model is strong, and the defaults are getting better. I hope more people try it and push feedback, because this is one of the most promising DX directions I have seen recently in Solana JS.
